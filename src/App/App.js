@@ -25,8 +25,6 @@ var keyCode = [
   73, // i
   79, // o
   80, // p
-  219, // [
-  221, // ]
 
   65, // a
   83, // s
@@ -37,8 +35,6 @@ var keyCode = [
   74, // j
   75, // k
   76, // l
-  186, // ;
-  222, // '
 
   90, // z
   88, // x
@@ -46,10 +42,7 @@ var keyCode = [
   86, // v
   66, // b
   78, // n
-  77, // m
-  188, // ,
-  190, // .
-  191 // /
+  77 // m
 ]
 
 // created a state so instead of just music from one file to be played
@@ -58,7 +51,7 @@ class App extends Component {
   constructor () {
     super()
     this.state = {
-      selected: 'histheme'
+      selected: 'Wind Chimes'
     }
     this.handleKeyDown = this.handleKeyDown.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
@@ -73,14 +66,15 @@ class App extends Component {
 
   // plays a note base on keyboard selection
   handleKeyDown (e) {
-    // console.log(keyCode.length)
+    console.log(keyCode.length)
      for (let i = 0; i < keyCode.length; i++) {
       if (e.keyCode === keyCode[i]) {
-        if (this.state.selected === 'histheme') {
+        if (this.state.selected === 'Wind Chimes') {
           document.getElementById(`audio${[i]}`).play();
+          console.log(histheme[`audio${[i]}`])
         } 
-        else if (this.state.selected === 'other') {
-          document.getElementById(`audio${[i + 33]}`).play();
+        else if (this.state.selected === 'Piano') {
+          document.getElementById(`audio${[i + 25]}`).play();
         }
       }
     }
@@ -90,11 +84,11 @@ class App extends Component {
    handleKeyUp (e) {
      for (let i = 0; i < keyCode.length; i++) {
       if (e.keyCode === keyCode[i]) {
-        if (this.state.selected === 'histheme') {
+        if (this.state.selected === 'Wind Chimes') {
         document.getElementById(`audio${[i]}`).currentTime = 0;
         }
-        else if (this.state.selected === 'other') {
-          document.getElementById(`audio${[i + 33]}`).currentTime = 0;
+        else if (this.state.selected === 'Piano') {
+          document.getElementById(`audio${[i + 25]}`).currentTime = 0;
         }
       }
     }
@@ -122,8 +116,8 @@ class App extends Component {
       <div>
         wow
         <select onChange={this.handleSelected}>
-          <option>histheme</option>
-          <option>other</option>
+          <option>Wind Chimes</option>
+          <option>Piano</option>
         </select>
           {music}
 
