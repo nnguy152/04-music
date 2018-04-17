@@ -1,3 +1,39 @@
 audio {
    display: none;
 }
+
+.header {
+   margin: 0 auto;
+   padding-left: 50px;
+   padding-top: 60px;
+   color: white;
+   font-family: 'Orbitron', sans-serif;
+   letter-spacing: 5px;
+   font-size: 50px;
+}
+
+.App {
+   background-image: url('http://getwallpapers.com/wallpaper/full/7/8/7/569472.jpg');
+   background-color: black;
+   background-size: cover;
+   height: 100vh;
+}
+
+.select {
+   width: 200px;
+   height: 40px;
+   font-size: 20px;
+   margin-left: 50px;
+   margin-top: 20px;
+   outline-color: rgb(143, 242, 255);
+   background: rgba(255, 255, 255, 0.761);
+   border: none;
+   padding-left: 10px;
+   font-family: 'Orbitron', sans-serif;
+}
+
+
+.option {
+   background: white;
+   -webkit-appearance: none;
+}

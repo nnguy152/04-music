@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Keyboard from '../Keyboard/Keyboard'
 
 // source from https://stackoverflow.com/questions/42118296/dynamically-import-images-from-a-directory-using-webpack
 // allows me to require all files from a directory without having to import every single one
@@ -81,7 +82,6 @@ class App extends Component {
   // requires own function b/c oscillators will not start again once stopped
   createOscSounds (e) {
     console.log('triangle function')
-    // let notes = ['C5', 'D5', 'E5', 'F5', 'G5', 'A5', 'B5', 'C6', 'D6', 'E6', 'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3']
     oscillator = context.createOscillator()
     let gainNode = context.createGain()
     
@@ -130,17 +130,17 @@ class App extends Component {
       })
 
     return (
-      <div>
-        wow
-        <select onChange={this.handleSelected}>
-          <option>Wind Chimes</option>
-          <option>Piano</option>
-          <option>Triangle</option>
-          <option>Sawtooth</option>
-          <option>Sine</option>
+      <div className="App">
+        <h1 className="header">keytones</h1>
+        <select className="select" onChange={this.handleSelected}>
+          <option className="option">Wind Chimes</option>
+          <option className="option">Piano</option>
+          <option className="option">Triangle</option>
+          <option className="option">Sawtooth</option>
+          <option className="option">Sine</option>
         </select>
           {music}
-
+          <Keyboard />
       </div>
     );
   }

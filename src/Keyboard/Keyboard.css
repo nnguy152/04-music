@@ -1,0 +1,26 @@
+.keyboard {
+   display: flex;
+   margin: 400px auto;
+   flex-wrap: wrap;
+   width: 850px;
+   height: 300px;
+   text-align: center;
+}
+
+.keys {
+   width: 55px;
+   height: 55px;
+   text-align: center;
+   line-height: 60px;
+   margin: 15px;
+   background: rgba(255,255,255, 0.55);
+   color: white;
+   font-size: 20px;
+   font-family: 'Orbitron', sans-serif;
+}
+.keys:nth-last-of-type(16) {
+   margin-left: 55px;
+}
+.keys:nth-last-of-type(7) {
+   margin-left: 140px;
+}
