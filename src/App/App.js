@@ -5,7 +5,7 @@ import './App.css';
 // allows me to require all files from a directory without having to import every single one
 function importAll(file) {
   let files = {}
-  file.keys().map((item, index) => { 
+  file.keys().map((item, index) => {
     return files[item.replace('../sounds/soundFiles/', '')] = file(item)
   });
   return files
@@ -20,12 +20,18 @@ let oscillator;
 let tones = []
 
 // keyCode for all letters of keyboard, QWERTY order
-let keyCode = [ 81, 87, 69, 82, 84, 89, 85, 73, 79, 80, 65, 83, 68, 70, 71, 72, 74, 75, 76, 90, 88, 67, 86, 66, 78, 77 ]
+let keyCode = [81, 87, 69, 82, 84, 89, 85, 73, 79, 80, 65, 83, 68, 70, 71, 72, 74, 75, 76, 90, 88, 67, 86, 66, 78, 77]
+
+// makes a P5 circle
+var Sketch = React.createElement('svg', {
+  width: '100', height: '100'}, React.createElement('circle', {
+    cx: '50', cy: '50', r: '40', stroke: 'black', fill: 'white'
+  }))
 
 // created a state so instead of just music from one file to be played
 // can select multiple types of music depending on user input
 class App extends Component {
-  constructor () {
+  constructor() {
     super()
     this.state = {
       selected: 'Wind Chimes',
@@ -35,31 +41,32 @@ class App extends Component {
     this.handleKeyUp = this.handleKeyUp.bind(this)
     this.handleSelected = this.handleSelected.bind(this)
     this.makeTones = this.makeTones.bind(this)
-    this.toggle = this.toggle.bind(this)
+    // this.toggle = this.toggle.bind(this)
   }
 
   // makes the whole page have a listener
-  componentDidMount (){
+  componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown, false)
     document.addEventListener('keyup', this.handleKeyUp, false)
+    document.getElementById('sketch')
     this.makeTones()
   }
 
   // makes a range of frequencies
-  makeTones () {
-    let start = 1000
+  makeTones() {
+    let start = 1100
     for (let i = 0; i < keyCode.length; i++) {
-        start = start - 30
-        tones.push(start)
+      start = start - 30
+      tones.push(start)
     }
   }
 
   // plays a note base on keyboard selection
-  handleKeyDown (e) {
+  handleKeyDown(e) {
     e.preventDefault()
-    this.toggle()
+    // this.toggle()
     if (this.state.selected === 'Triangle' || this.state.selected === 'Sawtooth' || this.state.selected === 'Sine') {
-      console.log('keydown')
+      // console.log('keydown')
       this.createOscSounds()
       for (let i = 0; i < keyCode.length; i++) {
         // changes pitch of each sound
@@ -72,8 +79,8 @@ class App extends Component {
     for (let i = 0; i < keyCode.length; i++) {
       if (e.keyCode === keyCode[i]) {
         // this.setState({keyLetter: String.fromCharCode(keyCode[i])})
-          let key = document.getElementById(`${i}`) 
-          key.style.backgroundColor = 'rgb(143, 242, 255)'
+        let key = document.getElementById(`${i}`)
+        key.style.backgroundColor = 'rgb(143, 242, 255)'
         if (this.state.selected === 'Wind Chimes') {
           document.getElementById(`audio${[i]}`).play()
         } else if (this.state.selected === 'Piano') {
@@ -84,11 +91,11 @@ class App extends Component {
   }
 
   // requires own function b/c oscillators will not start again once stopped
-  createOscSounds (e) {
-    console.log('triangle function')
+  createOscSounds(e) {
+    // console.log('triangle function')
     oscillator = context.createOscillator()
     let gainNode = context.createGain()
-    
+
     // sets master volume of tone
     if (this.state.selected === 'Sawtooth') {
       gainNode.gain.value = 0.1
@@ -107,42 +114,42 @@ class App extends Component {
   }
 
   // allows note to be played without waiting for sound file to end
-  handleKeyUp (e) {
+  handleKeyUp(e) {
     for (let i = 0; i < keyCode.length; i++) {
       if (e.keyCode === keyCode[i]) {
-        let key = document.getElementById(`${i}`) 
+        let key = document.getElementById(`${i}`)
         key.style.backgroundColor = 'rgba(255,255,255, 0.55)'
         if (this.state.selected === 'Wind Chimes') {
           document.getElementById(`audio${[i]}`).currentTime = 0;
         } else if (this.state.selected === 'Piano') {
           document.getElementById(`audio${[i + 25]}`).currentTime = 0;
-        } 
+        }
       }
     }
   }
 
-  handleSelected (e) {
+  handleSelected(e) {
     let selected = e.target.value
-    this.setState({selected: selected})
+    this.setState({ selected: selected })
   }
 
 
-  toggle (e) {
-    console.log(this.state.active)
+  // toggle(e) {
+    // console.log(this.state.active)
     // this.setState((prevState) => { return { active: !prevState.active }} )
-  }
+  // }
 
   render() {
     // creates all the sound files to be played
     let music = Object.keys(soundFiles).map((file, i) => {
-       return (
-          <audio key={i} onKeyDown={this.handleKeyDown} onKeyUp={this.handleKeyUp} id={`audio${i}`} controls src={soundFiles[`${file}`]} />
-        )
+      return (
+        <audio key={i} onKeyDown={this.handleKeyDown} onKeyUp={this.handleKeyUp} id={`audio${i}`} controls src={soundFiles[`${file}`]} />
+      )
     })
 
     // creates keyboard on screen
     let keyboard = keyCode.map((letter, i) => {
-      return ( 
+      return (
         <div key={i} className={`keys num${i}`} id={i}>{String.fromCharCode(letter)}</div>
       )
     })
@@ -151,19 +158,23 @@ class App extends Component {
       <div className="App">
         <h1 className="header">keytones</h1>
         <select className="select" onChange={this.handleSelected}>
-          <option className="option">Wind Chimes</option>
-          <option className="option">Piano</option>
-          <option className="option">Triangle</option>
-          <option className="option">Sawtooth</option>
-          <option className="option">Sine</option>
+          <option>Wind Chimes</option>
+          <option>Piano</option>
+          <option>Triangle</option>
+          <option>Sawtooth</option>
+          <option>Sine</option>
         </select>
 
-          <div className="random"></div>
-          {music}
+        {/* <P5 /> */}
 
-          <div className="keyboard">
-            {keyboard}
-          </div>
+        {music}
+        
+        <br />
+
+        <div className="random">{Sketch}</div>
+        <div className="keyboard">
+          {keyboard}
+        </div>
       </div>
     );
   }
