@@ -13,10 +13,10 @@ audio {
 }
 
 .App {
+   margin-top: 30px;
    background-image: url('http://getwallpapers.com/wallpaper/full/7/8/7/569472.jpg');
    background-color: black;
-   background-size: cover;
-   height: 100vh;
+   background-size: 100%;
 }
 
 .select {
@@ -37,3 +37,32 @@ audio {
    background: white;
    -webkit-appearance: none;
 }
+
+
+.keyboard {
+   display: flex;
+   margin: 400px auto;
+   flex-wrap: wrap;
+   width: 850px;
+   height: 300px;
+   text-align: center;
+}
+
+.keys {
+   width: 55px;
+   height: 55px;
+   text-align: center;
+   line-height: 60px;
+   margin: 15px;
+   background: rgba(255,255,255, 0.55);
+   color: white;
+   font-size: 20px;
+   font-family: 'Orbitron', sans-serif;
+}
+.keys:nth-last-of-type(16) {
+   margin-left: 55px;
+}
+.keys:nth-last-of-type(7) {
+   margin-left: 140px;
+}
+
