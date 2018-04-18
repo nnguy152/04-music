@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 
+// Enter in letters in a text box and play text
+
+
 // source from https://stackoverflow.com/questions/42118296/dynamically-import-images-from-a-directory-using-webpack
 // allows me to require all files from a directory without having to import every single one
 function importAll(file) {
@@ -22,12 +25,6 @@ let tones = []
 // keyCode for all letters of keyboard, QWERTY order
 let keyCode = [81, 87, 69, 82, 84, 89, 85, 73, 79, 80, 65, 83, 68, 70, 71, 72, 74, 75, 76, 90, 88, 67, 86, 66, 78, 77]
 
-// makes a P5 circle
-var Sketch = React.createElement('svg', {
-  width: '100', height: '100'}, React.createElement('circle', {
-    cx: '50', cy: '50', r: '40', stroke: 'black', fill: 'white'
-  }))
-
 // created a state so instead of just music from one file to be played
 // can select multiple types of music depending on user input
 class App extends Component {
@@ -35,13 +32,43 @@ class App extends Component {
     super()
     this.state = {
       selected: 'Wind Chimes',
+      visuals: undefined,
       active: false
     }
     this.handleKeyDown = this.handleKeyDown.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
     this.handleSelected = this.handleSelected.bind(this)
+    this.makeCircles = this.makeCircles.bind(this)
+    this.deleteCircles = this.deleteCircles.bind(this)
     this.makeTones = this.makeTones.bind(this)
+    this.getRandomInt = this.getRandomInt.bind(this)
     // this.toggle = this.toggle.bind(this)
+  }
+
+  getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
+  makeCircles () {
+    var x = this.getRandomInt(1000)
+    var y = this.getRandomInt(300)
+    var r = this.getRandomInt(100)
+    console.log(`x: ${x}`)
+    console.log(`r: ${r}`)
+
+    if (this.state.visuals === undefined) {
+      this.setState({ visuals: React.createElement('svg', {
+        width: '1000', height: '300'}, React.createElement('circle', {
+          cx: x, cy: y, r: r, stroke: 'black', fill: 'white'
+        }))
+      })
+    }
+  }
+
+  deleteCircles () {
+    if (this.state.visuals !== undefined) {
+      this.setState({ visuals: undefined })
+    }
   }
 
   // makes the whole page have a listener
@@ -64,6 +91,7 @@ class App extends Component {
   // plays a note base on keyboard selection
   handleKeyDown(e) {
     e.preventDefault()
+    this.makeCircles()
     // this.toggle()
     if (this.state.selected === 'Triangle' || this.state.selected === 'Sawtooth' || this.state.selected === 'Sine') {
       // console.log('keydown')
@@ -115,6 +143,7 @@ class App extends Component {
 
   // allows note to be played without waiting for sound file to end
   handleKeyUp(e) {
+    this.deleteCircles()
     for (let i = 0; i < keyCode.length; i++) {
       if (e.keyCode === keyCode[i]) {
         let key = document.getElementById(`${i}`)
@@ -165,13 +194,11 @@ class App extends Component {
           <option>Sine</option>
         </select>
 
-        {/* <P5 /> */}
-
         {music}
-        
+
         <br />
 
-        <div className="random">{Sketch}</div>
+        <div className="random">{this.state.visuals}</div>
         <div className="keyboard">
           {keyboard}
         </div>
