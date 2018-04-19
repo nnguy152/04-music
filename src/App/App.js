@@ -82,7 +82,7 @@ class App extends Component {
     var analyser = cxt.createAnalyser()         //analysizes frequency of audio
 
     audioSource.connect(analyser)
-    // audioSource.connect(cxt.destination)
+    // audioSource.connect(cxt.destination) // connects audio to speakers but no.
 
 
     var frequencyData = new Uint8Array(analyser.frequencyBinCount)        // gets values from analyser in array
