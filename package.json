@@ -9,7 +9,8 @@
     "react-dom": "^16.3.2",
     "react-p5-wrapper": "0.0.4",
     "react-paper-bindings": "^1.0.3",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "tone": "^0.12.80"
   },
   "scripts": {
     "start": "react-scripts start",

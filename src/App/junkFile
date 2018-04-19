@@ -1,0 +1,35 @@
+   // this.handleTextInput = this.handleTextInput.bind(this)
+   // this.handleSubmit = this.handleSubmit.bind(this)
+
+
+  // handleTextInput () {
+  //   document.removeEventListener('keydown', this.handleKeyDown, false)
+  //   document.removeEventListener('keyup', this.handleKeyUp, false)
+  // }
+
+  // handleSubmit (e) {
+    // e.preventDefault()
+    // let word = this.refs.text.value
+
+    // for (let i = 0; i < word.length; i++) {
+    //   if (word.charAt(i) === String.fromCharCode(keyCode)) {
+    //     document.getElementById(`audio${[i]}`).play()
+    //   }
+    // }
+  //   console.log(word)
+
+  //   this.setState({text: word})
+
+  //   document.addEventListener('keydown', this.handleKeyDown, false)
+  //   document.addEventListener('keyup', this.handleKeyUp, false)
+  // }
+
+
+
+
+
+        {/* <p className="label">Type What You Want to Hear</p>
+        <form onClick={this.handleTextInput}>
+          <input className="text-input" type="text" ref="text" /> 
+          <input className="submit-input" type="submit" onClick={this.handleSubmit} />
+        </form> */}

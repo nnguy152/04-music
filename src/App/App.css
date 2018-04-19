@@ -7,7 +7,6 @@ audio {
    padding-left: 50px;
    padding-top: 40px;
    color: white;
-   font-family: 'Orbitron', sans-serif;
    letter-spacing: 5px;
    font-size: 50px;
 }
@@ -15,7 +14,9 @@ audio {
 .App {
    background-image: url('http://getwallpapers.com/wallpaper/full/7/8/7/569472.jpg');
    background-color: black;
+   left: 10px;
    background-size: 100%;
+   height: 100vh;
 }
 
 .select {
@@ -37,14 +38,14 @@ audio {
    -webkit-appearance: none;
 }
 
-
 .keyboard {
    display: flex;
    padding-top: 30px;
    margin: 0 auto;
+   margin-bottom: 20px;
    flex-wrap: wrap;
    width: 850px;
-   height: 300px;
+   height: 200px;
    text-align: center;
 }
 
@@ -53,19 +54,16 @@ audio {
    height: 55px;
    text-align: center;
    line-height: 60px;
-   margin: 15px;
+   margin: 7px;
    background: rgba(255,255,255, 0.55);
-   /* color: white; */
    font-size: 20px;
-   font-family: 'Orbitron', sans-serif;
 }
-.keys:nth-last-of-type(16) {
-   margin-left: 55px;
+.keys:nth-child(13) {
+   margin-left: 40px;
 }
-.keys:nth-last-of-type(7) {
-   margin-left: 140px;
+.keys:nth-last-of-type(10) {
+   margin-left: 75px;
 }
-
 
 .random {
    border: 5px rgba(255,255,255, 0.55) solid;
@@ -75,4 +73,44 @@ audio {
    height: 300px;
    margin: 5px auto;
    margin-top: 40px;
+}
+
+form {
+   text-align: center;
+}
+.label {
+   color: white;
+   font-size: 20px;
+   text-align: center;
+}
+
+.text-input {
+   border: 2px rgba(255,255,255, 0.55) solid;
+   border-top-left-radius: 5px;
+   border-bottom-left-radius: 5px;
+   border-right: none;
+   background: rgba(255,255,255, 0.55);
+   width: 350px;
+   font-size: 20px;
+   font-family: 'Orbitron', sans-serif;
+   padding: 10px 0 10px 10px;
+   text-align: center;
+}
+
+.submit-input {
+   border: none;
+   border-top-right-radius: 5px;
+   border-bottom-right-radius: 5px;
+   background: rgba(255,255,255, 0.7);
+   vertical-align: 2px;
+   height: 44px;
+   font-family: 'Orbitron', sans-serif;
+   padding-left: 10px;
+   padding-right: 15px;
+   font-size: 15px;
+}
+.canvas {
+   position: absolute;
+   margin-left: 30px;
+   top: 720px;
 }
