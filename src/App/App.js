@@ -36,7 +36,8 @@ class App extends Component {
     this.state = {
       selected: 'Piano',
       visuals: undefined,
-      active: false
+      active: false,
+      playInput: []
     }
     this.handleKeyDown = this.handleKeyDown.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
@@ -44,13 +45,65 @@ class App extends Component {
     this.makeCircles = this.makeCircles.bind(this)
     this.deleteCircles = this.deleteCircles.bind(this)
     this.makeTones = this.makeTones.bind(this)
-    this.randomNum = this.randomNum.bind(this)
 
     this.initializeAnalyser = this.initializeAnalyser.bind(this)
-    // this.makeAudioVisual = this.makeAudioVisual.bind(this)
     this.toggle = this.toggle.bind(this)
+    this.handleInput = this.handleInput.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.playUserInput = this.playUserInput.bind(this)
   }
 
+  handleInput (e) {
+    document.removeEventListener('keydown', this.handleKeyDown, false)
+    document.removeEventListener('keyup', this.handleKeyUp, false)
+  }
+  handleSubmit (e) {
+    e.preventDefault()
+    let input = this.refs.userTyped.value.split('')
+    let translatedInput = []
+    for (let i = 0; i < input.length; i++) {
+      console.log(input[i].charCodeAt(0) - 32)
+      translatedInput.push(input[i].charCodeAt(0) - 32)
+    } 
+    console.log(translatedInput)
+    this.setState({ playInput: translatedInput }, this.playUserInput)
+  }
+
+  playUserInput(e) {
+    console.log('playing')
+    this.makeCircles()   
+    this.toggle()
+    // if (this.state.selected === 'Triangle' || this.state.selected === 'Sawtooth' || this.state.selected === 'Sine') {   // for oscillator pitches
+    //   this.createOscSounds()
+    //   for (let i = 0; i < this.state.playInput.length; i++) {
+    //     console.log(this.state.playInput[i])
+    //     for (let i = 0; i < keyCode.length; i++) {
+    //       if (this.state.playInput[i] === keyCode[i]) {             // changes pitch of each sound
+    //         oscillator.frequency.value = tones[i]
+    //       }
+          
+    //     }
+    //   }
+    // }
+
+    for (let j = 0; j < this.state.playInput.length; j++) {
+        for (let i = 0; i < keyCode.length; i++) {
+          if (this.state.playInput[j] === keyCode[i]) {
+            let key = document.getElementById(`${i}`)           // colors the key on screen
+            key.style.backgroundColor = 'rgb(143, 242, 255)'
+
+            if (this.state.selected === 'HarderBetter') {     // plays the notes from the sound files
+              document.getElementById(`audio${[i]}`).play()
+            } else if (this.state.selected === 'Piano') {
+              number = i + 34          
+              document.getElementById(`audio${[i + 34]}`).play()
+            }
+
+          }
+        }
+      }
+    
+  }
 
   // adds listener to page
   componentDidMount() {
@@ -77,13 +130,10 @@ class App extends Component {
 
     var cxt =  new (window.AudioContext || window.webkitAudioContext)();
     var audioSource = cxt.createMediaElementSource(music)
-
-
     var analyser = cxt.createAnalyser()         //analysizes frequency of audio
 
     audioSource.connect(analyser)
     // audioSource.connect(cxt.destination) // connects audio to speakers but no.
-
 
     var frequencyData = new Uint8Array(analyser.frequencyBinCount)        // gets values from analyser in array
     console.log(frequencyData)
@@ -94,8 +144,7 @@ class App extends Component {
       gap = 20,
       meterNum = 1000/ 5,
 
-      cxt = canvas.getContext('2d'),
-      gradient = cxt.createLinearGradient(0, 0, 0, 300);
+      cxt = canvas.getContext('2d')
 
       function makeBars() {
         var array = new Uint8Array(analyser.frequencyBinCount);
@@ -105,21 +154,17 @@ class App extends Component {
 
         for (var i = 0; i < meterNum; i++) {
             var value = array[i * step]
-            cxt.fillStyle = 'rgba(255,255,255, 0.55)'
+            cxt.fillStyle = 'rgba(255,255,255, 0.1)'
             cxt.fillRect(i * 12, cheight - value, meterWidth, cheight)   // the meter
         }
         requestAnimationFrame(makeBars);
       }
-
       makeBars()
-    
   }
-
 
   randomNum(max) {     // from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     return Math.floor(Math.random(40) * Math.floor(max))
   }
-
 
   makeCircles () {      // creates circles in canvas
     var x = this.randomNum(1000)     // random values for circle position, size, and color
@@ -193,14 +238,10 @@ class App extends Component {
         let key = document.getElementById(`${i}`)           // colors the key on screen
         key.style.backgroundColor = 'rgb(143, 242, 255)'
 
-        
         if (this.state.selected === 'HarderBetter') {     // plays the notes from the sound files
           document.getElementById(`audio${[i]}`).play()
         } else if (this.state.selected === 'Piano') {
-          number = i + 34
-          console.log(number)
-          // this.initializeAnalyser()
-          
+          number = i + 34          
           document.getElementById(`audio${[i + 34]}`).play()
         }
       }
@@ -259,6 +300,11 @@ class App extends Component {
           <option>HarderBetter</option>
         </select>
 
+        <form onClick={this.handleInput}>
+          <input className='text-input' ref='userTyped' placeholder='type things here' />
+          <input className='submit-input' type='submit' onClick={this.handleSubmit} />
+        </form>
+        
         {music}
    
         <div className="random"> {this.state.visuals} </div> 
