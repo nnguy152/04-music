@@ -59,7 +59,7 @@ class App extends Component {
   }
   handleSubmit(e) {
     e.preventDefault()
-    let input = this.refs.userTyped.value.split('')
+    let input = this.refs.userTyped.value.toLowerCase().split('')
     let translatedInput = []
     for (let i = 0; i < input.length; i++) {
       console.log(input[i].charCodeAt(0) - 32)
@@ -115,7 +115,7 @@ class App extends Component {
           if (counter < keepData.length) {
             loop()
           }
-        }.bind(this), 500)
+        }.bind(this), 300)
       }
       loop()
 
